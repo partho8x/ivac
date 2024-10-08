@@ -38,7 +38,7 @@ def otp_slot_time(web_id, name, phone, email, otp):
     best_time_slotdate = specific_date
     best_time_slotavslot = ""
     best_time_slottdisplay = ""
-    print(name+" "+web_id+" "+phone)
+    response_data = ""
     print(web_id+" "+name+" "+phone+" "+email+" "+otp)
     url = "https://payment.ivacbd.com/api/v1/queue-manage"
     print("Expeted Appointment :"+specific_date)
