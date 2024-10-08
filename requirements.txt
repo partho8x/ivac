@@ -1,0 +1,9 @@
+flask
+requests
+bs4
+tabulate
+rembg
+pillow
+gunicorn
+bs4
+tabulate
