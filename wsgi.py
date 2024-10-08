@@ -622,7 +622,7 @@ def otp_slot_time(web_id, name, phone, email, otp):
                      print('Available slot_times:', slot_times_count)
                      print('status:', response['status'])
                      time.sleep(2)
-                     return render_template('result.html', items=response['status'])
+                     
     except KeyboardInterrupt:
         print("\nProcess interrupted by Ctrl+C")
         #otp = input_otp_and_run_again()
