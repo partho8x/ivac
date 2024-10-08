@@ -769,8 +769,8 @@ def otp_slot_time(web_id, name, phone, email, otp):
         response_data = pay_invoice(url, data, headers, cookies, backoff_factor=2)
         if response_data:
             print("Response Data:", response_data)
-            response_text = '{"status":"OK","url":"https:\\/\\/securepay.sslcommerz.com\\/gwprocess\\/v4\\/gw.php?Q=REDIRECT&SESSIONKEY=C700B051753F933A9CFD3EF67997810F&cardname=","order_id":"SBIMU1725764857254","token_no":"T17U66DD14FC1DF9076405"}'
-            response_data = json.loads(response_text)
+            #response_text = '{"status":"OK","url":"https:\\/\\/securepay.sslcommerz.com\\/gwprocess\\/v4\\/gw.php?Q=REDIRECT&SESSIONKEY=C700B051753F933A9CFD3EF67997810F&cardname=","order_id":"SBIMU1725764857254","token_no":"T17U66DD14FC1DF9076405"}'
+            #response_data = json.loads(response_text)
             # Check the status of the response
             if response_data['status'] == 'OK':
                 payloop = False
