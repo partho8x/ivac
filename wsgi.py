@@ -505,7 +505,7 @@ def otp_slot_time(web_id, name, phone, email, otp):
                 print("Response Data:", response_data)
                 # Sample response object
                 response = response_data
-                response = {
+                '''response = {
                     "status": "OK",
                     "data": [""],
                     "slot_dates": ["2024-10-03"],
@@ -584,7 +584,7 @@ def otp_slot_time(web_id, name, phone, email, otp):
                         }
                     ]
                 }
-
+'''
                 slot_times_count = len(response["slot_times"])
                 if slot_times_count > 0:
                     generateslot = False
