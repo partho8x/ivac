@@ -819,7 +819,7 @@ def otp_slot_time(web_id, name, phone, email, otp, slotid):
             else:
                 payloop = False
                 print("Status:", response_data['status'])
-                url = response_data['status']
+                url = response_data['errors']
             return url
         else:
             print("Request failed.")
