@@ -11,6 +11,7 @@ import signal
 import sys
 import time
 
+
 app = Flask(__name__)
 print("IVAC Auto Appointment Script is written by Partho Biswas")
 print("Version: beta 02/10/2024")
@@ -497,132 +498,146 @@ def otp_slot_time(web_id, name, phone, email, otp):
 
     # Call the function
     try:
-        generateslot = True # defult true
+        generateslot = True
         while generateslot:
             print("---------------generate_slot_time----------------")
-            response_data = generate_slot_time(url, data, cookies, headers, backoff_factor=2)
-            if response_data:
-                print("Response Data:", response_data)
-                # Sample response object
-                response = response_data
-                '''response = {
-                    "status": "OK",
-                    "data": [""],
-                    "slot_dates": ["2024-10-03"],
-                    "slot_times": [
-                        {
-                            "id": 128762,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 9,
-                            "date": "2024-10-02",
-                            "availableSlot": 117,
-                            "time_display": "09:00 - 09:59"
-                        },
-                        {
-                            "id": 149209,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 10,
-                            "date": "2024-10-02",
-                            "availableSlot": 150,
-                            "time_display": "10:00 - 10:59"
-                        },
-                        {
-                            "id": 128764,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 11,
-                            "date": "2024-10-02",
-                            "availableSlot": 87,
-                            "time_display": "11:00 - 11:59"
-                        },
-                        {
-                            "id": 128765,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 12,
-                            "date": "2024-10-02",
-                            "availableSlot": 99,
-                            "time_display": "12:00 - 12:59"
-                        },
-                        {
-                            "id": 128766,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 13,
-                            "date": "2024-10-02",
-                            "availableSlot": 110,
-                            "time_display": "13:00 - 13:59"
-                        },
-                        {
-                            "id": 128767,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 14,
-                            "date": "2024-10-02",
-                            "availableSlot": 136,
-                            "time_display": "14:00 - 14:59"
-                        },
-                        {
-                            "id": 128768,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 15,
-                            "date": "2024-10-02",
-                            "availableSlot": 117,
-                            "time_display": "15:00 - 15:59"
-                        },
-                        {
-                            "id": 128769,
-                            "ivac_id": 17,
-                            "visa_type": 13,
-                            "hour": 16,
-                            "date": "2024-10-02",
-                            "availableSlot": 145,
-                            "time_display": "16:00 - 16:59"
-                        }
-                    ]
-                }
-'''
-                slot_times_count = len(response["slot_times"])
-                if slot_times_count > 0:
+            if os.path.exists(r'dateid.txt'):
+                with open(r'dateid.txt', 'r') as file:
+                    dateid = file.read().strip()
+                    best_time_slotid = dateid
+                    best_time_slothour = "10"
+                    best_time_slotdate = specific_date
+                    best_time_slotavslot = "145"
+                    best_time_slottdisplay = "10:00 - 10:59"
+                    print(f"The time slotid is: {best_time_slotid}")
                     generateslot = False
-                    # Extract available slots
-                    available_slots = [slot['availableSlot'] for slot in response['slot_times']]
+            else:
+                print("dateid.txt does not exist.")
+                response_data = generate_slot_time(url, data, cookies, headers, backoff_factor=2)
+                if response_data:
+                    print("Response Data:", response_data)
+                    # Sample response object
+                    response = response_data
+                    '''response = {
+                        "status": "OK",
+                        "data": [""],
+                        "slot_dates": ["2024-10-03"],
+                        "slot_times": [
+                            {
+                                "id": 128762,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 9,
+                                "date": "2024-10-02",
+                                "availableSlot": 117,
+                                "time_display": "09:00 - 09:59"
+                            },
+                            {
+                                "id": 128763,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 10,
+                                "date": "2024-10-02",
+                                "availableSlot": 150,
+                                "time_display": "10:00 - 10:59"
+                            },
+                            {
+                                "id": 128764,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 11,
+                                "date": "2024-10-02",
+                                "availableSlot": 87,
+                                "time_display": "11:00 - 11:59"
+                            },
+                            {
+                                "id": 128765,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 12,
+                                "date": "2024-10-02",
+                                "availableSlot": 99,
+                                "time_display": "12:00 - 12:59"
+                            },
+                            {
+                                "id": 128766,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 13,
+                                "date": "2024-10-02",
+                                "availableSlot": 110,
+                                "time_display": "13:00 - 13:59"
+                            },
+                            {
+                                "id": 128767,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 14,
+                                "date": "2024-10-02",
+                                "availableSlot": 136,
+                                "time_display": "14:00 - 14:59"
+                            },
+                            {
+                                "id": 128768,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 15,
+                                "date": "2024-10-02",
+                                "availableSlot": 117,
+                                "time_display": "15:00 - 15:59"
+                            },
+                            {
+                                "id": 128769,
+                                "ivac_id": 17,
+                                "visa_type": 13,
+                                "hour": 16,
+                                "date": "2024-10-02",
+                                "availableSlot": 145,
+                                "time_display": "16:00 - 16:59"
+                            }
+                        ]
+                    }
+    '''
+                    slot_times_count = len(response["slot_times"])
+                    if slot_times_count > 0:
+                        generateslot = False
+                        # Extract available slots
+                        available_slots = [slot['availableSlot'] for slot in response['slot_times']]
 
-                    # Find the maximum available slot
-                    max_slot = max(available_slots)
+                        # Find the maximum available slot
+                        max_slot = max(available_slots)
 
-                    # Find the index of the maximum available slot
-                    max_index = available_slots.index(max_slot)
+                        # Find the index of the maximum available slot
+                        max_index = available_slots.index(max_slot)
 
-                    # Get the best time slot details
-                    best_time_slot = response['slot_times'][max_index]
-                    best_time_slotid = response['slot_times'][max_index]["id"]
-                    best_time_slotivacid = response['slot_times'][max_index]["ivac_id"]
-                    best_time_slotvtype = response['slot_times'][max_index]["visa_type"]
-                    best_time_slothour = response['slot_times'][max_index]["hour"]
-                    best_time_slotdate = response['slot_times'][max_index]["date"]
-                    best_time_slotavslot = response['slot_times'][max_index]["availableSlot"]
-                    best_time_slottdisplay = response['slot_times'][max_index]["time_display"]
-                    # Print the results
-                    print('Available Slots:', available_slots)
-                    print('Highest Available Slot:', max_slot)
-                    print('Index of Highest Available Slot:', max_index)
-                    print('Best Time Slot:', best_time_slot)
-                    print('Best Time Slot id:', best_time_slotid)
-                    print('Best Time Slot ivac_id:', best_time_slotivacid)
-                    print('Best Time Slot visa_type:', best_time_slotvtype)
-                    print('Best Time Slot hour:', best_time_slothour)
-                    print('Best Time Slot date:', best_time_slotdate)
-                    print('Best Time Slotid availableSlot:', best_time_slotavslot)
-                    print('Best Time Slot time_display:', best_time_slottdisplay)
-                else:
-                     print('Available slot_times:', slot_times_count)
-                     print('status:', response['status'])
-                     time.sleep(2)
-                     
+                        # Get the best time slot details
+                        best_time_slot = response['slot_times'][max_index]
+                        best_time_slotid = response['slot_times'][max_index]["id"]
+                        best_time_slotivacid = response['slot_times'][max_index]["ivac_id"]
+                        best_time_slotvtype = response['slot_times'][max_index]["visa_type"]
+                        best_time_slothour = response['slot_times'][max_index]["hour"]
+                        best_time_slotdate = response['slot_times'][max_index]["date"]
+                        best_time_slotavslot = response['slot_times'][max_index]["availableSlot"]
+                        best_time_slottdisplay = response['slot_times'][max_index]["time_display"]
+                        with open(r'dateid.txt', 'w') as file:
+                            file.write(str(best_time_slotid))
+                            print(f"Date id {best_time_slotid} entered and saved.")
+                        # Print the results
+                        print('Available Slots:', available_slots)
+                        print('Highest Available Slot:', max_slot)
+                        print('Index of Highest Available Slot:', max_index)
+                        print('Best Time Slot:', best_time_slot)
+                        print('Best Time Slot id:', best_time_slotid)
+                        print('Best Time Slot ivac_id:', best_time_slotivacid)
+                        print('Best Time Slot visa_type:', best_time_slotvtype)
+                        print('Best Time Slot hour:', best_time_slothour)
+                        print('Best Time Slot date:', best_time_slotdate)
+                        print('Best Time Slotid availableSlot:', best_time_slotavslot)
+                        print('Best Time Slot time_display:', best_time_slottdisplay)
+                    else:
+                         print('Available slot_times:', slot_times_count)
+                         print('status:', response['status'])
+                         time.sleep(2)
     except KeyboardInterrupt:
         print("\nProcess interrupted by Ctrl+C")
         #otp = input_otp_and_run_again()
